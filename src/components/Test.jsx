@@ -1,19 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTyping } from "../context/TypingContext";
-import { useEffect } from "react";
 
 function Test() {
-  const { fetchData, question, addCorrect, addInCorrect } = useTyping();
+  const { question, addCorrect, addInCorrect, reset, defaultReset } =
+    useTyping();
   const [inputVal, setInputVal] = useState("");
 
   useEffect(() => {
-    fetchData("easy");
-  }, []);
+    if (reset) {
+      setInputVal("");
+    }
+  }, [reset]);
 
   const handleInput = (e) => {
+    if (reset) defaultReset();
     const input = e.target.value;
-    if (input.length <= question.length) setInputVal(input);
+    if (input.length <= question.length) {
+      setInputVal(input);
+
+      if (input.length > inputVal.length) {
+        const i = input.length - 1;
+        if (input[i] === question[i]) {
+          addCorrect();
+        } else {
+          addInCorrect();
+        }
+      }
+    }
+    if (input.length === question.length) {
+      // Test complete
+      alert("done");
+    }
   };
+
   return (
     <section>
       <div className="relative text-3xl text-neutral-400 leading-relaxed py-5">
@@ -23,17 +42,24 @@ function Test() {
           autoFocus="true"
           autoCapitalize="false"
           spellCheck="false"
+          value={inputVal}
           onPaste={(e) => e.preventDefault()}
+          onSelect={(e) => {
+            e.target.selectionStart = e.target.value.length;
+            e.target.selectionEnd = e.target.value.length;
+          }}
+          onClick={(e) => {
+            e.target.selectionStart = e.target.value.length;
+            e.target.selectionEnd = e.target.value.length;
+          }}
           onChange={handleInput}
-          className="absolute opacity-10 flex items-start w-full max-w-full h-full text-3xl text-neutral-400 leading-relaxed"
+          className="absolute opacity-0 flex items-start w-full max-w-full h-full text-3xl text-neutral-400 leading-relaxed"
         />
         {question.split("").map((e, i) => {
           let style = "";
           const char = inputVal[i];
 
           if (char !== undefined) {
-            char === e ? addCorrect() : addInCorrect();
-
             style = char === e ? "correct" : "wrong";
           }
 

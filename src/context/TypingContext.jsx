@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useReducer } from "react";
 import { useContext, createContext } from "react";
 
@@ -9,6 +10,9 @@ const initialState = {
   wpm: 0,
   correctChar: 0,
   incorrectChar: 0,
+  difficulty: "easy",
+  testMode: "timed",
+  reset: false,
 };
 
 function reducer(state, action) {
@@ -22,37 +26,68 @@ function reducer(state, action) {
     case "correct":
       return {
         ...state,
-        correctChar: state.correctChar++,
+        correctChar: state.correctChar + 1,
       };
 
     case "incorrect":
       return {
         ...state,
-        incorrectChar: state.incorrectChar++,
+        incorrectChar: state.incorrectChar + 1,
+      };
+
+    case "difficulty/set":
+      return {
+        ...state,
+        difficulty: action.payload,
+      };
+
+    case "testMode/set":
+      return {
+        ...state,
+        testMode: action.payload,
+      };
+
+    case "restart":
+      return {
+        ...initialState,
+        question: state.question,
+        difficulty: state.difficulty,
+        testMode: state.testMode,
+        reset: true,
+      };
+
+    case "defaultReset":
+      return {
+        ...state,
+        reset: false,
       };
 
     default:
-      throw new Error("hihihihi");
+      throw new Error("Unknown action type");
   }
 }
 
-const random = Math.floor(Math.random() * 10);
-
 function TypingProvider({ children }) {
-  const [{ question, correctChar, incorrectChar }, dispatch] = useReducer(
-    reducer,
-    initialState,
-  );
+  const [
+    { question, correctChar, incorrectChar, difficulty, testMode, reset },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
-  async function fetchData(mode) {
+  async function fetchData() {
     try {
-      const response = await fetch(`${BASE_URL}/${mode}`);
+      const queryMode = difficulty;
+      const response = await fetch(`${BASE_URL}/${queryMode}`);
       const data = await response.json();
+      const random = Math.floor(Math.random() * data.length);
       dispatch({ type: "question/loaded", payload: data[random] });
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   function addCorrect() {
     dispatch({ type: "correct" });
@@ -61,6 +96,23 @@ function TypingProvider({ children }) {
   function addInCorrect() {
     dispatch({ type: "incorrect" });
   }
+
+  function setDifficulty(newDifficulty) {
+    dispatch({ type: "difficulty/set", payload: newDifficulty });
+  }
+
+  function setTestMode(newMode) {
+    dispatch({ type: "testMode/set", payload: newMode });
+  }
+
+  function restart() {
+    dispatch({ type: "restart" });
+  }
+
+  function defaultReset() {
+    dispatch({ type: "defaultReset" });
+  }
+
   return (
     <TypingContext.Provider
       value={{
@@ -70,6 +122,13 @@ function TypingProvider({ children }) {
         addInCorrect,
         correctChar,
         incorrectChar,
+        difficulty,
+        testMode,
+        setDifficulty,
+        setTestMode,
+        restart,
+        defaultReset,
+        reset,
       }}
     >
       {children}
