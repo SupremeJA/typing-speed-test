@@ -1,3 +1,4 @@
+import Accuracy from "../components/Accuracy";
 import { useTyping } from "../context/TypingContext";
 
 function Complete() {
@@ -34,7 +35,18 @@ function Complete() {
         </div>
         <div className="completedata">
           <h6 className="text-sm text-neutral-400 mb-1">Accuracy</h6>
-          <p className="text-lg font-bold">{accuracy}%</p>
+          <p className="flex justify-between text-lg font-bold">
+            <Accuracy />
+            {accuracy === 100 ? (
+              <img
+                src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExOTZtYmFtYTgwZnBteW1lZXg0Y3VqNGFzbXp6NjJweXhxejdyd3RmYSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/yASFCj2K0MGeASqSom/giphy.gif"
+                alt="spinning cat"
+                className="w-10 h-5 object-cover rounded-lg"
+              />
+            ) : (
+              ""
+            )}
+          </p>
         </div>
         <div className="completedata">
           <h6 className="text-sm text-neutral-400 mb-1">Characters</h6>

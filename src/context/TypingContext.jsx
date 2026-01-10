@@ -2,9 +2,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { useReducer } from "react";
 import { useContext, createContext } from "react";
+import data from "../data/data.json";
 
 const TypingContext = createContext();
-const BASE_URL = "http://localhost:8000";
 
 const initialState = {
   question: "",
@@ -14,7 +14,7 @@ const initialState = {
   difficulty: "easy",
   testMode: "timed",
   reset: false,
-  accuracy: 0,
+  accuracy: 100,
 };
 
 function reducer(state, action) {
@@ -41,6 +41,9 @@ function reducer(state, action) {
       return {
         ...state,
         difficulty: action.payload,
+        incorrectChar: 0,
+        correctChar: 0,
+        reset: true,
       };
 
     case "testMode/set":
@@ -65,13 +68,16 @@ function reducer(state, action) {
         reset: false,
       };
 
-    case "setAccuracy":
+    case "setAccuracy": {
+      const total = state.correctChar + state.incorrectChar;
       return {
         ...state,
-        accuracy: Math.floor(
-          (state.correctChar / (state.correctChar + state.incorrectChar)) * 100,
-        ),
+        accuracy:
+          total > 0
+            ? Math.floor((state.correctChar / total) * 100)
+            : state.accuracy,
       };
+    }
 
     default:
       throw new Error("Unknown action type");
@@ -96,10 +102,9 @@ function TypingProvider({ children }) {
   async function fetchData() {
     try {
       const queryMode = difficulty;
-      const response = await fetch(`${BASE_URL}/${queryMode}`);
-      const data = await response.json();
-      const random = Math.floor(Math.random() * data.length);
-      dispatch({ type: "question/loaded", payload: data[random] });
+      const modeData = data[queryMode];
+      const random = Math.floor(Math.random() * modeData.length);
+      dispatch({ type: "question/loaded", payload: modeData[random] });
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -132,6 +137,7 @@ function TypingProvider({ children }) {
   function defaultReset() {
     dispatch({ type: "defaultReset" });
   }
+
   useEffect(() => {
     function setAccuracy() {
       dispatch({ type: "setAccuracy" });

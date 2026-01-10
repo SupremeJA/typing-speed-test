@@ -41,7 +41,7 @@ function Test() {
 
   return (
     <section>
-      <div className="text-3xl text-neutral-400 leading-relaxed py-5">
+      <div className="relative text-3xl text-neutral-400 leading-relaxed pt-7 pb-13">
         <textarea
           autoComplete="false"
           autoCorrect="false"
@@ -59,7 +59,7 @@ function Test() {
             e.target.selectionEnd = e.target.value.length;
           }}
           onChange={handleInput}
-          className="absolute opacity-10 flex items-start w-full max-w-full text-3xl text-neutral-400 leading-relaxed"
+          className="absolute opacity-10 flex items-start py-15 w-full h-full max-w-full text-3xl text-neutral-400 leading-relaxed"
         />
         {question.split("").map((e, i) => {
           let style = "";
