@@ -4,7 +4,7 @@ import TestHeading from "../components/TestHeading";
 
 function Typingtest() {
   return (
-    <section>
+    <section className="relative">
       <TestHeading />
       <Test />
       <TestFooter />

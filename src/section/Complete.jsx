@@ -1,11 +1,23 @@
+import { useTyping } from "../context/TypingContext";
+
 function Complete() {
+  const {
+    setComplete,
+    restart,
+    accuracy,
+    correctChar,
+
+    question,
+  } = useTyping();
+
   return (
-    <section className="flex flex-col justify-center items-center gap-10 w-full">
-      <div>
+    <section className=" relative flex flex-col justify-center items-center gap-10 w-full">
+      <div className="text-center">
         <img
-          src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif"
-          alt="Completion Animation"
-          className="w-20 h-20 rounded-2xl justify-self-center"
+          src="
+        https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzZ0amE2bmFyajBvdWJsNTh6ZWhsbGxxNmNydTdyeWJjMHV0ajM0dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/e5OgbyGSyxbdpyO1ug/giphy.gif"
+          alt="complete gif"
+          className="w-100 h-40 mx-auto object-cover rounded-xl"
         />
         <h2 className="text-2xl font-bold text-center mt-4 mb-2">
           Test Complete!
@@ -22,18 +34,27 @@ function Complete() {
         </div>
         <div className="completedata">
           <h6 className="text-sm text-neutral-400 mb-1">Accuracy</h6>
-          <p className="text-lg font-bold">100%</p>
+          <p className="text-lg font-bold">{accuracy}%</p>
         </div>
         <div className="completedata">
           <h6 className="text-sm text-neutral-400 mb-1">Characters</h6>
-          <p className="text-lg font-bold">120/5</p>
+          {/* opimize logic later*/}
+          <p className="text-lg font-bold">{`${correctChar}/${question.length}`}</p>
         </div>
       </div>
       <button
-        className="px-8 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded transition-colors
-        "
+        className="px-8 py-3 bg-gray-200 hover:bg-gray-300 text-neutral-900 rounded transition-colors"
+        onClick={() => {
+          setComplete(false);
+          restart();
+        }}
       >
         Go Again
+        <img
+          src="../assets/images/icon-restart.svg"
+          alt="restart icon"
+          className="inline-block ml-2 brightness-0"
+        />
       </button>
     </section>
   );

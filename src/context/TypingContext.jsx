@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useState } from "react";
 import { useReducer } from "react";
 import { useContext, createContext } from "react";
 
@@ -13,6 +14,7 @@ const initialState = {
   difficulty: "easy",
   testMode: "timed",
   reset: false,
+  accuracy: 0,
 };
 
 function reducer(state, action) {
@@ -54,12 +56,21 @@ function reducer(state, action) {
         difficulty: state.difficulty,
         testMode: state.testMode,
         reset: true,
+        accuracy: 0,
       };
 
     case "defaultReset":
       return {
         ...state,
         reset: false,
+      };
+
+    case "setAccuracy":
+      return {
+        ...state,
+        accuracy: Math.floor(
+          (state.correctChar / (state.correctChar + state.incorrectChar)) * 100,
+        ),
       };
 
     default:
@@ -69,9 +80,18 @@ function reducer(state, action) {
 
 function TypingProvider({ children }) {
   const [
-    { question, correctChar, incorrectChar, difficulty, testMode, reset },
+    {
+      question,
+      correctChar,
+      incorrectChar,
+      difficulty,
+      testMode,
+      reset,
+      accuracy,
+    },
     dispatch,
   ] = useReducer(reducer, initialState);
+  const [complete, setComplete] = useState(false);
 
   async function fetchData() {
     try {
@@ -112,6 +132,12 @@ function TypingProvider({ children }) {
   function defaultReset() {
     dispatch({ type: "defaultReset" });
   }
+  useEffect(() => {
+    function setAccuracy() {
+      dispatch({ type: "setAccuracy" });
+    }
+    setAccuracy();
+  }, [correctChar, incorrectChar]);
 
   return (
     <TypingContext.Provider
@@ -129,6 +155,9 @@ function TypingProvider({ children }) {
         restart,
         defaultReset,
         reset,
+        setComplete,
+        complete,
+        accuracy,
       }}
     >
       {children}

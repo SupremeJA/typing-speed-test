@@ -2,8 +2,14 @@ import { useState, useEffect } from "react";
 import { useTyping } from "../context/TypingContext";
 
 function Test() {
-  const { question, addCorrect, addInCorrect, reset, defaultReset } =
-    useTyping();
+  const {
+    question,
+    addCorrect,
+    addInCorrect,
+    reset,
+    defaultReset,
+    setComplete,
+  } = useTyping();
   const [inputVal, setInputVal] = useState("");
 
   useEffect(() => {
@@ -29,13 +35,13 @@ function Test() {
     }
     if (input.length === question.length) {
       // Test complete
-      alert("done");
+      setComplete(true);
     }
   };
 
   return (
     <section>
-      <div className="relative text-3xl text-neutral-400 leading-relaxed py-5">
+      <div className="text-3xl text-neutral-400 leading-relaxed py-5">
         <textarea
           autoComplete="false"
           autoCorrect="false"
@@ -53,7 +59,7 @@ function Test() {
             e.target.selectionEnd = e.target.value.length;
           }}
           onChange={handleInput}
-          className="absolute opacity-0 flex items-start w-full max-w-full h-full text-3xl text-neutral-400 leading-relaxed"
+          className="absolute opacity-10 flex items-start w-full max-w-full text-3xl text-neutral-400 leading-relaxed"
         />
         {question.split("").map((e, i) => {
           let style = "";
