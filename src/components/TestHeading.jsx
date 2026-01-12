@@ -1,6 +1,4 @@
-import { useTyping } from "../context/TypingContext";
-import Accuracy from "./Accuracy";
-import Settings from "./Settings";
+import { Accuracy, Settings } from "./index";
 
 function TestHeading() {
   return (

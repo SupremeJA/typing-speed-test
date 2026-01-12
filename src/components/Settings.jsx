@@ -1,4 +1,4 @@
-import ModeButton from "./ModeButton";
+import ModeButton from "./index";
 import { useTyping } from "../context/TypingContext";
 
 function Settings() {

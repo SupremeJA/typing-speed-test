@@ -1,15 +1,8 @@
-import Accuracy from "../components/Accuracy";
+import Accuracy from "../components/index";
 import { useTyping } from "../context/TypingContext";
 
 function Complete() {
-  const {
-    setComplete,
-    restart,
-    accuracy,
-    correctChar,
-
-    question,
-  } = useTyping();
+  const { setComplete, restart, accuracy, correctChar, question } = useTyping();
 
   return (
     <section className=" relative flex flex-col justify-center items-center gap-10 w-full">

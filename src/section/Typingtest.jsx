@@ -1,6 +1,4 @@
-import Test from "../components/Test";
-import TestFooter from "../components/TestFooter";
-import TestHeading from "../components/TestHeading";
+import { Test, TestFooter, TestHeading } from "../components/index";
 
 function Typingtest() {
   return (

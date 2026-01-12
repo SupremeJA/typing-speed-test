@@ -8,6 +8,7 @@ const TypingContext = createContext();
 
 const initialState = {
   question: "",
+  start: false,
   wpm: 0,
   correctChar: 0,
   incorrectChar: 0,
@@ -23,6 +24,12 @@ function reducer(state, action) {
       return {
         ...state,
         question: action.payload.text,
+      };
+
+    case "start":
+      return {
+        ...state,
+        start: true,
       };
 
     case "correct":
@@ -69,13 +76,11 @@ function reducer(state, action) {
       };
 
     case "setAccuracy": {
-      const total = state.correctChar + state.incorrectChar;
       return {
         ...state,
-        accuracy:
-          total > 0
-            ? Math.floor((state.correctChar / total) * 100)
-            : state.accuracy,
+        accuracy: Math.floor(
+          (state.correctChar / (state.correctChar + state.incorrectChar)) * 100,
+        ),
       };
     }
 
@@ -88,6 +93,7 @@ function TypingProvider({ children }) {
   const [
     {
       question,
+      start,
       correctChar,
       incorrectChar,
       difficulty,
@@ -113,6 +119,10 @@ function TypingProvider({ children }) {
   useEffect(() => {
     fetchData();
   }, []);
+
+  function startTest() {
+    dispatch({ type: "start" });
+  }
 
   function addCorrect() {
     dispatch({ type: "correct" });
@@ -150,6 +160,8 @@ function TypingProvider({ children }) {
       value={{
         fetchData,
         question,
+        start,
+        startTest,
         addCorrect,
         addInCorrect,
         correctChar,
