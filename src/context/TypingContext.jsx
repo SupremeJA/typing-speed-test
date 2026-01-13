@@ -84,6 +84,12 @@ function reducer(state, action) {
       };
     }
 
+    case "setWPM":
+      return {
+        ...state,
+        wpm: action.payload,
+      };
+
     default:
       throw new Error("Unknown action type");
   }
@@ -100,6 +106,7 @@ function TypingProvider({ children }) {
       testMode,
       reset,
       accuracy,
+      wpm,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
@@ -148,6 +155,10 @@ function TypingProvider({ children }) {
     dispatch({ type: "defaultReset" });
   }
 
+  function setWPM(data) {
+    dispatch({ type: "setWPM", payload: data });
+  }
+
   useEffect(() => {
     function setAccuracy() {
       dispatch({ type: "setAccuracy" });
@@ -176,6 +187,8 @@ function TypingProvider({ children }) {
         setComplete,
         complete,
         accuracy,
+        wpm,
+        setWPM,
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTyping } from "../context/TypingContext";
-import Load from "./index";
+import Load from "./Load";
 
 function Test() {
   const {

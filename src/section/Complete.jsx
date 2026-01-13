@@ -1,8 +1,9 @@
-import Accuracy from "../components/index";
+import { Accuracy, Wpm } from "../components/index";
 import { useTyping } from "../context/TypingContext";
 
 function Complete() {
-  const { setComplete, restart, accuracy, correctChar, question } = useTyping();
+  const { setComplete, restart, accuracy, correctChar, question, wpm } =
+    useTyping();
 
   return (
     <section className=" relative flex flex-col justify-center items-center gap-10 w-full">
@@ -24,7 +25,9 @@ function Complete() {
       <div className="flex flex-col md:flex-row items-start gap-10 w-full md:w-[50%]">
         <div className="completedata">
           <h6 className="text-sm text-neutral-400 mb-1">WPM</h6>
-          <p className="text-lg font-bold">98</p>
+          <p className="text-lg font-bold">
+            <Wpm />
+          </p>
         </div>
         <div className="completedata">
           <h6 className="text-sm text-neutral-400 mb-1">Accuracy</h6>
