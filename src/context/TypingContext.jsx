@@ -10,12 +10,13 @@ const initialState = {
   question: "",
   start: false,
   wpm: 0,
+  bestWpm: localStorage.getItem("WPM") || 0,
   correctChar: 0,
   incorrectChar: 0,
   difficulty: "easy",
   testMode: "timed",
   reset: false,
-  accuracy: 100,
+  accuracy: 0,
 };
 
 function reducer(state, action) {
@@ -30,6 +31,7 @@ function reducer(state, action) {
       return {
         ...state,
         start: true,
+        reset: false,
       };
 
     case "correct":
@@ -69,18 +71,16 @@ function reducer(state, action) {
         accuracy: 0,
       };
 
-    case "defaultReset":
-      return {
-        ...state,
-        reset: false,
-      };
-
     case "setAccuracy": {
+      // logic for calculating accuracy
+
       return {
         ...state,
-        accuracy: Math.floor(
-          (state.correctChar / (state.correctChar + state.incorrectChar)) * 100,
-        ),
+        accuracy:
+          Math.floor(
+            (state.correctChar / (state.correctChar + state.incorrectChar)) *
+              100,
+          ) || 0,
       };
     }
 
@@ -90,7 +90,14 @@ function reducer(state, action) {
         wpm: action.payload,
       };
 
+    case "setBestWPM":
+      return {
+        ...state,
+        bestWpm: action.payload,
+      };
+
     default:
+      console.log(action.type);
       throw new Error("Unknown action type");
   }
 }
@@ -107,10 +114,12 @@ function TypingProvider({ children }) {
       reset,
       accuracy,
       wpm,
+      bestWpm,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
   const [complete, setComplete] = useState(false);
+  const initialBest = initialState.bestWpm;
 
   async function fetchData() {
     try {
@@ -139,6 +148,21 @@ function TypingProvider({ children }) {
     dispatch({ type: "incorrect" });
   }
 
+  function setWPM(data) {
+    dispatch({ type: "setWPM", payload: data });
+  }
+
+  function setBestWpm() {
+    dispatch({ type: "setBestWPM", payload: localStorage.getItem("WPM") });
+  }
+
+  useEffect(() => {
+    if (wpm > bestWpm) {
+      localStorage.setItem("WPM", wpm);
+      setBestWpm();
+    }
+  }, [wpm]);
+
   function setDifficulty(newDifficulty) {
     dispatch({ type: "difficulty/set", payload: newDifficulty });
   }
@@ -149,14 +173,6 @@ function TypingProvider({ children }) {
 
   function restart() {
     dispatch({ type: "restart" });
-  }
-
-  function defaultReset() {
-    dispatch({ type: "defaultReset" });
-  }
-
-  function setWPM(data) {
-    dispatch({ type: "setWPM", payload: data });
   }
 
   useEffect(() => {
@@ -182,13 +198,15 @@ function TypingProvider({ children }) {
         setDifficulty,
         setTestMode,
         restart,
-        defaultReset,
+
         reset,
         setComplete,
         complete,
         accuracy,
         wpm,
+        bestWpm,
         setWPM,
+        initialBest,
       }}
     >
       {children}

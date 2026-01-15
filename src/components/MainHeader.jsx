@@ -1,4 +1,7 @@
+import { useTyping } from "../context/TypingContext";
+
 function MainHeader() {
+  const { bestWpm } = useTyping();
   return (
     <header className="flex justify-between items-center py-3 mb-10 ">
       <div className="flex gap-2">
@@ -11,9 +14,9 @@ function MainHeader() {
         </span>
       </div>
 
-      <div className="flex">
+      <div className="flex gap-1">
         🏆 <span className="hidden md:flex">Personal</span> Best:
-        <strong className="font-semibold">78 WPM</strong>
+        <strong className="font-semibold">{bestWpm} WPM</strong>
       </div>
     </header>
   );

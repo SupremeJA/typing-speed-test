@@ -2,8 +2,15 @@ import { Accuracy, Wpm } from "../components/index";
 import { useTyping } from "../context/TypingContext";
 
 function Complete() {
-  const { setComplete, restart, accuracy, correctChar, question, wpm } =
-    useTyping();
+  const {
+    setComplete,
+    restart,
+    accuracy,
+    correctChar,
+    question,
+    wpm,
+    initialBest,
+  } = useTyping();
 
   return (
     <section className=" relative flex flex-col justify-center items-center gap-10 w-full">
@@ -15,19 +22,19 @@ function Complete() {
           className="w-100 h-40 mx-auto object-cover rounded-xl"
         />
         <h2 className="text-2xl font-bold text-center mt-4 mb-2">
-          Test Complete!
+          {initialBest === 0 ? "Baseline Established" : " Test Complete!"}
         </h2>
         <p className="text-sm text-neutral-400">
-          Solid run. Keep pushing to beat your high score.
+          {initialBest === 0
+            ? "You've set the bar. Now the real challenge begins-time to beat it"
+            : "Solid run. Keep pushing to beat your high score."}
         </p>
       </div>
 
       <div className="flex flex-col md:flex-row items-start gap-10 w-full md:w-[50%]">
         <div className="completedata">
           <h6 className="text-sm text-neutral-400 mb-1">WPM</h6>
-          <p className="text-lg font-bold">
-            <Wpm />
-          </p>
+          <p className="text-lg font-bold">{wpm}</p>
         </div>
         <div className="completedata">
           <h6 className="text-sm text-neutral-400 mb-1">Accuracy</h6>

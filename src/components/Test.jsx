@@ -8,9 +8,10 @@ function Test() {
     addCorrect,
     addInCorrect,
     reset,
-    defaultReset,
+
     setComplete,
   } = useTyping();
+
   const [inputVal, setInputVal] = useState("");
 
   useEffect(() => {
@@ -20,7 +21,6 @@ function Test() {
   }, [reset]);
 
   const handleInput = (e) => {
-    if (reset) defaultReset();
     const input = e.target.value;
     if (input.length <= question.length) {
       setInputVal(input);
@@ -72,7 +72,6 @@ function Test() {
               style = char === e ? "correct" : "wrong";
             }
 
-            // console.log(correctChar, incorrectChar);
             return (
               <span id={i} key={i} className={style}>
                 {e}
