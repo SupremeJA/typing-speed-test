@@ -1,4 +1,5 @@
 import { useTyping } from "../context/TypingContext";
+import logo from "../assets/images/logo-small.svg";
 
 function MainHeader() {
   const { bestWpm } = useTyping();
@@ -7,7 +8,7 @@ function MainHeader() {
   return (
     <header className="flex justify-between items-center py-3 mb-10 ">
       <div className="flex gap-2">
-        <img src="../assets/images/logo-small.svg" />
+        <img src={logo} />
         <span className="hidden md:block">
           <h1 className="text-2xl font-semibold">Typing Speed Test</h1>
           <p className="text-xs font-light">

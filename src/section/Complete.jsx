@@ -1,6 +1,6 @@
 import { Accuracy, Wpm } from "../components/index";
 import { useTyping } from "../context/TypingContext";
-
+import restartIcon from "../assets/images/icon-restart.svg";
 function Complete() {
   const {
     setComplete,
@@ -67,7 +67,7 @@ function Complete() {
       >
         Go Again
         <img
-          src="../assets/images/icon-restart.svg"
+          src={restartIcon}
           alt="restart icon"
           className="inline-block ml-2 brightness-0"
         />
