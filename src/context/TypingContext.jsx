@@ -17,6 +17,7 @@ const initialState = {
   testMode: "timed",
   reset: false,
   accuracy: 0,
+  message: {},
 };
 
 function reducer(state, action) {
@@ -69,6 +70,7 @@ function reducer(state, action) {
         testMode: state.testMode,
         reset: true,
         accuracy: 0,
+        bestWpm: state.bestWpm,
       };
 
     case "setAccuracy": {
@@ -96,6 +98,12 @@ function reducer(state, action) {
         bestWpm: action.payload,
       };
 
+    case "testComplete":
+      return {
+        ...state,
+        message: action.payload,
+      };
+
     default:
       console.log(action.type);
       throw new Error("Unknown action type");
@@ -115,16 +123,17 @@ function TypingProvider({ children }) {
       accuracy,
       wpm,
       bestWpm,
+      message,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
+
   const [complete, setComplete] = useState(false);
-  const initialBest = initialState.bestWpm;
 
   async function fetchData() {
     try {
       const queryMode = difficulty;
-      const modeData = data[queryMode];
+      const modeData = data["questions"][queryMode];
       const random = Math.floor(Math.random() * modeData.length);
       dispatch({ type: "question/loaded", payload: modeData[random] });
     } catch (error) {
@@ -135,6 +144,18 @@ function TypingProvider({ children }) {
   useEffect(() => {
     fetchData();
   }, []);
+
+  const messageData = data["complete"];
+  const initialBest = initialState.bestWpm;
+  console.log(bestWpm, localStorage.getItem("WPM"));
+  // console.log(messageData["firstscore"].headline);
+  // function completeMessage() {
+  //   if (initialBest > wpm) {
+  //     dispatch({ type: "testComplete", payload: messageData["noscore"] });
+  //   } else if (initialBest > 0 && wpm > initialBest) {
+  //     dispatch({ type: "testComplete", payload: messageData["highscore"] });
+  //   } else dispatch({ type: "testComplete", payload: messageData["first"] });
+  // }
 
   function startTest() {
     dispatch({ type: "start" });
@@ -161,6 +182,8 @@ function TypingProvider({ children }) {
       localStorage.setItem("WPM", wpm);
       setBestWpm();
     }
+    // completeMessage;
+    // console.log(message);
   }, [wpm]);
 
   function setDifficulty(newDifficulty) {
@@ -198,7 +221,6 @@ function TypingProvider({ children }) {
         setDifficulty,
         setTestMode,
         restart,
-
         reset,
         setComplete,
         complete,
@@ -206,7 +228,7 @@ function TypingProvider({ children }) {
         wpm,
         bestWpm,
         setWPM,
-        initialBest,
+        message,
       }}
     >
       {children}

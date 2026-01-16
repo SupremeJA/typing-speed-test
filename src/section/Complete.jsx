@@ -9,7 +9,7 @@ function Complete() {
     correctChar,
     question,
     wpm,
-    initialBest,
+    message,
   } = useTyping();
 
   return (
@@ -22,13 +22,9 @@ function Complete() {
           className="w-100 h-40 mx-auto object-cover rounded-xl"
         />
         <h2 className="text-2xl font-bold text-center mt-4 mb-2">
-          {initialBest === 0 ? "Baseline Established" : " Test Complete!"}
+          {message.headline}
         </h2>
-        <p className="text-sm text-neutral-400">
-          {initialBest === 0
-            ? "You've set the bar. Now the real challenge begins-time to beat it"
-            : "Solid run. Keep pushing to beat your high score."}
-        </p>
+        <p className="text-sm text-neutral-400">{message.message}</p>
       </div>
 
       <div className="flex flex-col md:flex-row items-start gap-10 w-full md:w-[50%]">
@@ -47,7 +43,12 @@ function Complete() {
                 className="w-10 h-5 object-cover rounded-lg"
               />
             ) : (
-              ""
+              <img
+                src=" https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG81NjBvcTZxNXV4N2tnY2o1MnM5dnZ5Z2FraDZ0OTZhMmVrYnd1OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/iq6M7AVBAsnxgnu2Fa/giphy.gif
+             "
+                alt="Chills gif"
+                className="w-10 h-5 object-cover rounded-lg"
+              />
             )}
           </p>
         </div>

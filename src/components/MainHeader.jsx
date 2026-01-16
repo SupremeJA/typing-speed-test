@@ -2,6 +2,8 @@ import { useTyping } from "../context/TypingContext";
 
 function MainHeader() {
   const { bestWpm } = useTyping();
+
+  // console.log(localStorage.getItem("WPM"));
   return (
     <header className="flex justify-between items-center py-3 mb-10 ">
       <div className="flex gap-2">
