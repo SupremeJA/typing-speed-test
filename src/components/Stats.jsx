@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useTyping } from "../context/TypingContext";
 
 function Stats() {
-  const maxTime = 5;
+  const maxTime = 60;
   const [timeLeft, setTimeLeft] = useState(maxTime);
   const { start, reset, setComplete } = useTyping();
 
