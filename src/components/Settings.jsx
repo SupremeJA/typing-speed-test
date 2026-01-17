@@ -11,7 +11,7 @@ function Settings() {
   }
 
   return (
-    <div className="hidden md:flex gap-5 items-center text-neutral-400">
+    <div className="flex flex-col md:flex-row gap-5 items-center text-neutral-400">
       <div className="flex gap-3 items-center pr-2 border-r-2 border-neutral-400">
         <p className="text-lg">Difficulty</p>
         <ModeButton

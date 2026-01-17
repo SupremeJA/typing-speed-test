@@ -1,4 +1,4 @@
-import { Accuracy, Wpm } from "../components/index";
+import { Accuracy } from "../components/index";
 import { useTyping } from "../context/TypingContext";
 import restartIcon from "../assets/images/icon-restart.svg";
 function Complete() {

@@ -46,11 +46,10 @@ function Test() {
       <section className="relative">
         <div className="relative text-3xl text-neutral-400 leading-relaxed pt-7 pb-13">
           <textarea
-            autoComplete="false"
-            autoCorrect="false"
-            autoFocus="true"
-            autoCapitalize="false"
-            spellCheck="false"
+            autoComplete="off"
+            autocorrect="off"
+            spellcheck="false"
+            autocapitalize="off"
             value={inputVal}
             onPaste={(e) => e.preventDefault()}
             onSelect={(e) => {
