@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Accuracy from "./Accuracy";
 import Timer from "./Timer";
 import Wpm from "./Wpm";
-import { useState } from "react";
 import { useTyping } from "../context/TypingContext";
 
 function Stats() {

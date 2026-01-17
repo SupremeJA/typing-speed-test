@@ -1,16 +1,21 @@
-import { useEffect } from "react";
-import { useState } from "react";
-import { useReducer } from "react";
-import { useContext, createContext } from "react";
+import {
+  useEffect,
+  useReducer,
+  useState,
+  useContext,
+  createContext,
+} from "react";
+
 import data from "../data/data.json";
 
-const TypingContext = createContext();
+// Hi there 🙃
 
+const TypingContext = createContext();
 const initialState = {
   question: "",
   start: false,
   wpm: 0,
-  bestWpm: localStorage.getItem("WPM") || 0,
+  bestWpm: +localStorage.getItem("WPM") || 0,
   correctChar: 0,
   incorrectChar: 0,
   difficulty: "easy",
@@ -71,11 +76,10 @@ function reducer(state, action) {
         reset: true,
         accuracy: 0,
         bestWpm: state.bestWpm,
+        message: state.message,
       };
 
     case "setAccuracy": {
-      // logic for calculating accuracy
-
       return {
         ...state,
         accuracy:
@@ -129,6 +133,7 @@ function TypingProvider({ children }) {
   ] = useReducer(reducer, initialState);
 
   const [complete, setComplete] = useState(false);
+  const [showComplete, setShowComplete] = useState(false);
 
   async function fetchData() {
     try {
@@ -145,17 +150,16 @@ function TypingProvider({ children }) {
     fetchData();
   }, []);
 
-  const messageData = data["complete"];
-  const initialBest = initialState.bestWpm;
-  console.log(bestWpm, localStorage.getItem("WPM"));
-  // console.log(messageData["firstscore"].headline);
-  // function completeMessage() {
-  //   if (initialBest > wpm) {
-  //     dispatch({ type: "testComplete", payload: messageData["noscore"] });
-  //   } else if (initialBest > 0 && wpm > initialBest) {
-  //     dispatch({ type: "testComplete", payload: messageData["highscore"] });
-  //   } else dispatch({ type: "testComplete", payload: messageData["first"] });
-  // }
+  function completeMessage() {
+    const messageData = data["complete"];
+
+    if (bestWpm > wpm) {
+      dispatch({ type: "testComplete", payload: messageData["noscore"] });
+    } else if (bestWpm === 0) {
+      dispatch({ type: "testComplete", payload: messageData["firstscore"] });
+    } else
+      dispatch({ type: "testComplete", payload: messageData["highscore"] });
+  }
 
   function startTest() {
     dispatch({ type: "start" });
@@ -170,11 +174,12 @@ function TypingProvider({ children }) {
   }
 
   function setWPM(data) {
+    setShowComplete(true);
     dispatch({ type: "setWPM", payload: data });
   }
 
   function setBestWpm() {
-    dispatch({ type: "setBestWPM", payload: localStorage.getItem("WPM") });
+    dispatch({ type: "setBestWPM", payload: +localStorage.getItem("WPM") });
   }
 
   useEffect(() => {
@@ -182,8 +187,7 @@ function TypingProvider({ children }) {
       localStorage.setItem("WPM", wpm);
       setBestWpm();
     }
-    // completeMessage;
-    // console.log(message);
+    completeMessage();
   }, [wpm]);
 
   function setDifficulty(newDifficulty) {
@@ -224,6 +228,8 @@ function TypingProvider({ children }) {
         reset,
         setComplete,
         complete,
+        showComplete,
+        setShowComplete,
         accuracy,
         wpm,
         bestWpm,
@@ -242,3 +248,5 @@ function useTyping() {
 
 // eslint-disable-next-line react-refresh/only-export-components
 export { TypingProvider, useTyping };
+
+// Have a nice day! 🙂

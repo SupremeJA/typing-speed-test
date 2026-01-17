@@ -4,6 +4,7 @@ import restartIcon from "../assets/images/icon-restart.svg";
 function Complete() {
   const {
     setComplete,
+    setShowComplete,
     restart,
     accuracy,
     correctChar,
@@ -16,15 +17,14 @@ function Complete() {
     <section className=" relative flex flex-col justify-center items-center gap-10 w-full">
       <div className="text-center">
         <img
-          src="
-        https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExMzZ0amE2bmFyajBvdWJsNTh6ZWhsbGxxNmNydTdyeWJjMHV0ajM0dCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/e5OgbyGSyxbdpyO1ug/giphy.gif"
+          src={message.image}
           alt="complete gif"
           className="w-100 h-40 mx-auto object-cover rounded-xl"
         />
         <h2 className="text-2xl font-bold text-center mt-4 mb-2">
-          {message.headline}
+          {message?.headline}
         </h2>
-        <p className="text-sm text-neutral-400">{message.message}</p>
+        <p className="text-sm text-neutral-400">{message?.message}</p>
       </div>
 
       <div className="flex flex-col md:flex-row items-start gap-10 w-full md:w-[50%]">
@@ -62,6 +62,7 @@ function Complete() {
         className="px-8 py-3 bg-gray-200 hover:bg-gray-300 text-neutral-900 rounded transition-colors"
         onClick={() => {
           setComplete(false);
+          setShowComplete(false);
           restart();
         }}
       >

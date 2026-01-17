@@ -130,15 +130,18 @@
   "complete": {
     "firstscore": {
       "headline": "Baseline Established",
-      "message": "You've set the bar. Now the real challenge begins-time to beat it"
+      "message": "You've set the bar. Now the real challenge begins-time to beat it",
+      "image": "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Zmo4Z3hxMmd0azlzc3A0Z3A5NzB2M3NlazYxdXN5ZjJocXNrMGpnaCZlcD12MV9naWZzX3JlbGF0ZWQmY3Q9Zw/Bl10664xbIVkk/giphy.gif"
     },
     "noscore": {
       "headline": "Test Complete!",
-      "message": "Solid run. Keep pushing to beat your high score."
+      "message": "Solid run. Keep pushing to beat your high score.",
+      "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdXdla255eGtyeG95ODZiMjc0eDF2Zzg4MHIzenYxdHpvYzQzbTdiaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/111ebonMs90YLu/giphy.gif"
     },
     "highscore": {
       "headline": "High Score Smashed!",
-      "message": "You're getting faster. That was incredible typing"
+      "message": "You're getting faster. That was incredible typing",
+      "image": "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExajViZTZ2b2V6bzAwNDkxb3YzZzR2ZzQ1Y2NtZmdwMjNnZWUxY2sybCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/11sBLVxNs7v6WA/giphy.gif"
     }
   }
 }

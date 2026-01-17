@@ -2,17 +2,16 @@ import { useEffect } from "react";
 import { useTyping } from "../context/TypingContext";
 
 function Wpm({ timeLeft, maxTime }) {
-  const { correctChar, setWPM } = useTyping();
+  const { correctChar, complete, setWPM } = useTyping();
   const timeElapsed = maxTime - timeLeft;
   const minutes = timeElapsed / 60;
-
   const calcWpm = minutes > 0 ? Math.round(correctChar / 5 / minutes) : 0;
 
   useEffect(() => {
-    if (timeElapsed === maxTime) {
+    if (complete) {
       setWPM(calcWpm);
     }
-  }, [timeElapsed]);
+  }, [complete]);
 
   return <strong>{calcWpm}</strong>;
 }
