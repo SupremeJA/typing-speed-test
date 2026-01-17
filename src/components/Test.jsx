@@ -1,18 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTyping } from "../context/TypingContext";
 import Load from "./Load";
 
 function Test() {
-  const {
-    question,
-    addCorrect,
-    addInCorrect,
-    reset,
-
-    setComplete,
-  } = useTyping();
+  const { question, addCorrect, addInCorrect, reset, start, setComplete } =
+    useTyping();
 
   const [inputVal, setInputVal] = useState("");
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (start) {
+      inputRef.current?.focus();
+    }
+  }, [start]);
 
   useEffect(() => {
     if (reset) {
@@ -46,6 +47,7 @@ function Test() {
       <section className="relative">
         <div className="relative text-3xl text-neutral-400 leading-relaxed pt-7 pb-13">
           <textarea
+            ref={inputRef}
             autoComplete="off"
             autocorrect="off"
             spellcheck="false"

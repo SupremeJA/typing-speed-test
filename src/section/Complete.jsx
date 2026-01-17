@@ -44,8 +44,7 @@ function Complete() {
               />
             ) : (
               <img
-                src=" https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExdG81NjBvcTZxNXV4N2tnY2o1MnM5dnZ5Z2FraDZ0OTZhMmVrYnd1OCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/iq6M7AVBAsnxgnu2Fa/giphy.gif
-             "
+                src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExN2ZrNTV5dmcwdGYxMDUyNGFyMDRqMGFkOWtobGdkeWhsbmFzazdnayZlcD12MV9naWZzX3NlYXJjaCZjdD1n/4a1f475nY27jaWCrgZ/giphy.gif"
                 alt="Chills gif"
                 className="w-10 h-5 object-cover rounded-lg"
               />
