@@ -17,7 +17,7 @@ function TestFooter() {
     >
       <button
         onClick={handleClick}
-        className={`px-8 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded transition-colors ${
+        className={`px-8 py-3 bg-gray-700 hover:bg-gray-300 text-neutral-0 font-bold rounded transition-colors ${
           shake ? "animate-shake" : ""
         }`}
       >

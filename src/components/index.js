@@ -7,6 +7,8 @@ import Test from "./Test";
 import TestFooter from "./TestFooter";
 import TestHeading from "./TestHeading";
 import Settings from "./Settings";
+import Stats from "./Stats";
+import Timer from "./Timer";
 
 export {
   Accuracy,
@@ -18,4 +20,6 @@ export {
   TestFooter,
   TestHeading,
   Settings,
+  Stats,
+  Timer,
 };

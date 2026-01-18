@@ -54,11 +54,14 @@ function reducer(state, action) {
 
     case "difficulty/set":
       return {
-        ...state,
+        ...initialState,
+        question: state.message,
         difficulty: action.payload,
-        incorrectChar: 0,
-        correctChar: 0,
+        testMode: state.testMode,
         reset: true,
+        accuracy: 0,
+        bestWpm: state.bestWpm,
+        message: state.message,
       };
 
     case "testMode/set":
@@ -148,7 +151,7 @@ function TypingProvider({ children }) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [difficulty]);
 
   function completeMessage() {
     const messageData = data["complete"];
@@ -194,12 +197,13 @@ function TypingProvider({ children }) {
     dispatch({ type: "difficulty/set", payload: newDifficulty });
   }
 
-  function setTestMode(newMode) {
-    dispatch({ type: "testMode/set", payload: newMode });
-  }
-
   function restart() {
     dispatch({ type: "restart" });
+  }
+
+  function setTestMode(newMode) {
+    dispatch({ type: "testMode/set", payload: newMode });
+    restart();
   }
 
   useEffect(() => {

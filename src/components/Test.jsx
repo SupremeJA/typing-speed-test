@@ -48,10 +48,11 @@ function Test() {
         <div className="relative text-3xl text-neutral-400 leading-relaxed pt-7 pb-13">
           <textarea
             ref={inputRef}
-            autoComplete="off"
-            autocorrect="off"
-            spellcheck="false"
-            autocapitalize="off"
+            autoComplete="false"
+            autoCorrect="off"
+            spellCheck={false}
+            autoCapitalize="none"
+            name="typinginput"
             value={inputVal}
             onPaste={(e) => e.preventDefault()}
             onSelect={(e) => {

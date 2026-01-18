@@ -1,38 +1,57 @@
-import { useEffect, useState } from "react";
-import Accuracy from "./Accuracy";
-import Timer from "./Timer";
-import Wpm from "./Wpm";
+import React, { useEffect, useState } from "react";
+
+import { Accuracy, Timer, Wpm } from "./index";
+
 import { useTyping } from "../context/TypingContext";
 
 function Stats() {
-  const maxTime = 60;
-  const [timeLeft, setTimeLeft] = useState(maxTime);
-  const { start, reset, setComplete } = useTyping();
+  // There's prolly a better way to do this, but wareva
+  const defTime = 60;
+  const [time, setTime] = useState(defTime);
+  const [timeLeft, setTimeLeft] = useState(time);
+  const { start, testMode, reset, setComplete } = useTyping();
+  const interval = React.useRef(null);
 
+  const format = (ms) => {
+    const s = Math.floor((ms / 1000) % 60);
+    const m = Math.floor((ms / 60000) % 60);
+    return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  };
+
+  // Looks messy, but it works
   useEffect(() => {
-    let interval = null;
-    // Only run if the game is live and time remains
     if (reset) {
-      setTimeLeft(maxTime);
+      setTime(defTime);
+      setTimeLeft(time);
       return;
     }
-    if (start && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft((prevTime) => prevTime - 1);
-      }, 1000);
-    } else if (timeLeft === 0) {
-      // Handle Game Over here
-      setComplete(true);
+
+    if (testMode === "timed") {
+      if (start && timeLeft > 0) {
+        interval.current = setInterval(() => {
+          setTimeLeft((prevTime) => prevTime - 1);
+        }, 1000);
+      } else if (timeLeft === 0) {
+        setComplete(true);
+      }
+
+      return () => clearInterval(interval.current);
     }
-    // CLEANUP: Very important! Stops the timer if component unmounts
-    return () => clearInterval(interval);
+
+    setTime(0);
+    interval.current = setInterval(() => {
+      setTime((prev) => prev + 10);
+    }, 10);
+
+    return () => clearInterval(interval.current);
   }, [start, timeLeft, setComplete, reset]);
 
   return (
     <div className="stats flex gap-4 items-center">
       <span>
         <p>WPM:</p>
-        <Wpm timeLeft={timeLeft} maxTime={maxTime} />
+
+        <Wpm time={time} timeLeft={timeLeft} maxTime={time} />
       </span>
 
       <span>
@@ -41,7 +60,7 @@ function Stats() {
         <Accuracy />
       </span>
 
-      <Timer timeLeft={timeLeft} />
+      <Timer timeLeft={timeLeft} format={format(time)} />
     </div>
   );
 }
