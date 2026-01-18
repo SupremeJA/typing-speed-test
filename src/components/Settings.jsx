@@ -1,4 +1,4 @@
-import { DesktopSettings } from "./index";
+import { DesktopSettings, MobileSettings } from "./index";
 import { useTyping } from "../context/TypingContext";
 
 function Settings() {
@@ -18,14 +18,17 @@ function Settings() {
   }
 
   return (
-    <DesktopSettings
-      testModeList={testModeList}
-      difficultyList={difficultyList}
-      handleDiff={handleDifficultyChange}
-      difficulty={difficulty}
-      testMode={testMode}
-      setTestMode={setTestMode}
-    />
+    <>
+      <DesktopSettings
+        testModeList={testModeList}
+        difficultyList={difficultyList}
+        handleDiff={handleDifficultyChange}
+        difficulty={difficulty}
+        testMode={testMode}
+        setTestMode={setTestMode}
+      />
+      <MobileSettings />
+    </>
   );
 }
 

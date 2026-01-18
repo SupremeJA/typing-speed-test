@@ -10,6 +10,7 @@ import Settings from "./Settings";
 import Stats from "./Stats";
 import Timer from "./Timer";
 import DesktopSettings from "./DesktopSettings";
+import MobileSettings from "./MobileSettings";
 
 export {
   Accuracy,
@@ -24,4 +25,5 @@ export {
   Stats,
   Timer,
   DesktopSettings,
+  MobileSettings,
 };
