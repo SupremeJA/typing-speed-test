@@ -9,6 +9,7 @@ import TestHeading from "./TestHeading";
 import Settings from "./Settings";
 import Stats from "./Stats";
 import Timer from "./Timer";
+import DesktopSettings from "./DesktopSettings";
 
 export {
   Accuracy,
@@ -22,4 +23,5 @@ export {
   Settings,
   Stats,
   Timer,
+  DesktopSettings,
 };

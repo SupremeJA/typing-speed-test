@@ -18,6 +18,8 @@ const initialState = {
   bestWpm: +localStorage.getItem("WPM") || 0,
   correctChar: 0,
   incorrectChar: 0,
+  testModeList: [],
+  difficultyList: [],
   difficulty: "easy",
   testMode: "timed",
   reset: false,
@@ -52,6 +54,12 @@ function reducer(state, action) {
         incorrectChar: state.incorrectChar + 1,
       };
 
+    case "difficulty/fetch":
+      return {
+        ...state,
+        difficultyList: action.payload,
+      };
+
     case "difficulty/set":
       return {
         ...initialState,
@@ -62,6 +70,12 @@ function reducer(state, action) {
         accuracy: 0,
         bestWpm: state.bestWpm,
         message: state.message,
+      };
+
+    case "testMode/fetch":
+      return {
+        ...state,
+        testModeList: action.payload,
       };
 
     case "testMode/set":
@@ -124,6 +138,8 @@ function TypingProvider({ children }) {
       start,
       correctChar,
       incorrectChar,
+      testModeList,
+      difficultyList,
       difficulty,
       testMode,
       reset,
@@ -148,6 +164,29 @@ function TypingProvider({ children }) {
       console.error("Error fetching data:", error);
     }
   }
+
+  function fetchDifficulty() {
+    try {
+      const modeData = data["difficulty"];
+      dispatch({ type: "difficulty/fetch", payload: modeData });
+    } catch (error) {
+      console.error("Error fetching difficulty:", error);
+    }
+  }
+
+  function fetchModes() {
+    try {
+      const modeData = data["mode"];
+      dispatch({ type: "testMode/fetch", payload: modeData });
+    } catch (error) {
+      console.error("Error fetching mode:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchDifficulty();
+    fetchModes();
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -218,6 +257,8 @@ function TypingProvider({ children }) {
       value={{
         fetchData,
         question,
+        testModeList,
+        difficultyList,
         start,
         startTest,
         addCorrect,
