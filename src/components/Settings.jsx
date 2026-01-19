@@ -27,7 +27,14 @@ function Settings() {
         testMode={testMode}
         setTestMode={setTestMode}
       />
-      <MobileSettings />
+      <MobileSettings
+        testModeList={testModeList}
+        difficultyList={difficultyList}
+        handleDiff={handleDifficultyChange}
+        difficulty={difficulty}
+        testMode={testMode}
+        setTestMode={setTestMode}
+      />
     </>
   );
 }

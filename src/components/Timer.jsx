@@ -6,8 +6,7 @@ function Timer({ timeLeft, format }) {
   return (
     <span>
       <p>Time</p>
-      {/* {console.log(format === `00:00`)}*/}
-      {console.log("hi")}
+
       <strong>{testMode === "passage" ? format : `0:${timeLeft}`}</strong>
     </span>
   );

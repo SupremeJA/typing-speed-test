@@ -68,14 +68,18 @@ function Test() {
           />
           {question.split("").map((e, i) => {
             let style = "";
+            let caret = "";
+
             const char = inputVal[i];
+            const charLength = inputVal.length;
 
             if (char !== undefined) {
               style = char === e ? "correct" : "wrong";
             }
+            caret = charLength === i ? "caret" : "";
 
             return (
-              <span id={i} key={i} className={style}>
+              <span id={i} key={i} className={`${style} ${caret}`}>
                 {e}
               </span>
             );

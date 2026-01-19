@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTyping } from "../context/TypingContext";
+import { MobileSettings } from ".";
 
 function TestFooter() {
   const [shake, setShake] = useState(false);

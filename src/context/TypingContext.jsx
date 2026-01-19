@@ -64,6 +64,8 @@ function reducer(state, action) {
       return {
         ...initialState,
         question: state.message,
+        testModeList: state.testModeList,
+        difficultyList: state.difficultyList,
         difficulty: action.payload,
         testMode: state.testMode,
         reset: true,
@@ -88,6 +90,8 @@ function reducer(state, action) {
       return {
         ...initialState,
         question: state.question,
+        testModeList: state.testModeList,
+        difficultyList: state.difficultyList,
         difficulty: state.difficulty,
         testMode: state.testMode,
         reset: true,

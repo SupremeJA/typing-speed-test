@@ -40,6 +40,9 @@ body {
     @apply text-lg text-neutral-400;
 }
 
+.caret {
+    @apply bg-neutral-0/20 transition duration-200;
+}
 .correct {
     @apply text-green-500 transition duration-200;
 }
