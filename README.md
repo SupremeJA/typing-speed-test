@@ -6,7 +6,7 @@ This is a solution to the [Typing Speed Test challenge on Frontend Mentor](https
 ### Links
 
 
-- Live Site URL: [Add live site URL here](typing-speed-test.pxxl.click)
+- Live Site URL: [-->] (https://typing-speed-test.pxxl.click) 
 
 
 ### Built with
